@@ -44,6 +44,14 @@ app.component('app-footer', {
     }
 });
 
+
+app.component('upload-form',{
+    name: 'UploadForm',
+    template:`
+    
+    `
+})
+
 const Home = {
     name: 'Home',
     template: `
