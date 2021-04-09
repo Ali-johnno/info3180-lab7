@@ -1,5 +1,6 @@
 /* Add your Application JavaScript */
 // Instantiate our main Vue Instance
+
 const app = Vue.createApp({
     data() {
         return {
@@ -21,6 +22,11 @@ app.component('app-header', {
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <router-link class="nav-link" to="/">Home <span class="sr-only">(current)</span></router-link>
+          </li>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <router-link class="nav-link" to="/upload">Upload<span class="sr-only">(current)</span></router-link>
           </li>
         </ul>
       </div>
@@ -45,12 +51,64 @@ app.component('app-footer', {
 });
 
 
-app.component('upload-form',{
+const UploadForm = {
     name: 'UploadForm',
     template:`
-    
-    `
-})
+    <ul :class="[className]">
+        <li v-for="message in messages">{{message}}</li>
+    </ul>
+    <form method="POST" id="uploadForm" v-on:submit.prevent="uploadPhoto">
+        <fieldset class="form-group">
+            <label for="description">Description</label>
+            <textarea type="text" name="description" class="form-control"></textarea>
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="photo">Photo Upload</label>
+            <input type="file" name="photo" accept="image/*">
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    `,
+    data(){
+        return {
+            messages:[],
+            className:''
+        }
+    },
+    methods: {
+        uploadPhoto(){
+            let self=this;
+            let uploadForm = document.getElementById('uploadForm');
+            let form_data = new FormData(uploadForm)
+
+            fetch("/api/upload",{
+            method: 'POST',
+            body: form_data,
+            headers: {
+                'X-CSRFToken': token
+            },
+            credentials:'same-origin'
+        })
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(jsonResponse){
+            if (jsonResponse['upload_info']){
+                self.messages = [jsonResponse['upload_info']['message']];
+                self.className="uploaded"
+            } else {
+                self.messages = jsonResponse['errors'];
+                self.className="errors"
+            }
+            
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+
+        }
+    }
+};
 
 const Home = {
     name: 'Home',
@@ -81,7 +139,7 @@ const NotFound = {
 const routes = [
     { path: "/", component: Home },
     // Put other routes here
-
+    {path: "/upload", component: UploadForm},
     // This is a catch all route in case none of the above matches
     { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound }
 ];

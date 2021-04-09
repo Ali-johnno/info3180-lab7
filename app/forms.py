@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField, FileField
-from wtforms.validators import DataRequired,Length, FileRequired, FileAllowed
-
+from wtforms import TextAreaField
+from wtforms.validators import DataRequired,Length
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 class UploadForm(FlaskForm):
     description = TextAreaField(
         'Description',

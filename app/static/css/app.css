@@ -1,3 +1,23 @@
 body {
     padding-top: 5rem;
 }
+
+.uploaded{
+    list-style-type:none ;
+    background-color: rgb(103, 204, 103);
+    border: 1px solid var(--success);
+    color: var(--success);
+    padding: 20px;
+    border-radius: 3px;
+}
+
+.errors{
+    background-color: rgba(241, 142, 142, 0.74);
+    border: 1px solid var(rgb(70, 1, 1));
+    color: var(--danger);
+    font-weight: bolder;
+    padding: 20px;
+    border-radius: 3px;
+}
+
+
