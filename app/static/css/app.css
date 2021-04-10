@@ -3,21 +3,31 @@ body {
 }
 
 .uploaded{
-    list-style-type:none ;
-    background-color: rgb(103, 204, 103);
-    border: 1px solid var(--success);
-    color: var(--success);
-    padding: 20px;
+    background-color: rgba(164, 240, 164, 0.767);
+    border: 1px solid rgb(1, 65, 1);
+    color: rgb(1, 65, 1);
     border-radius: 3px;
+    padding-top: 10px;
+}
+
+.uploaded li{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .errors{
-    background-color: rgba(241, 142, 142, 0.74);
-    border: 1px solid var(rgb(70, 1, 1));
-    color: var(--danger);
-    font-weight: bolder;
-    padding: 20px;
+    background-color: rgba(238, 147, 147, 0.692);
+    border: 1px solid rgb(70, 1, 1);
+    color: rgb(70, 1, 1);
     border-radius: 3px;
+    padding :10px 0px;
 }
 
+#photo{
+    padding-left: 10px;
+}
 
+#photo [type=file]{
+    background-color: aqua;
+}

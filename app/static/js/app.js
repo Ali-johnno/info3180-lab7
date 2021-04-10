@@ -52,19 +52,22 @@ app.component('app-footer', {
 
 
 const UploadForm = {
-    name: 'UploadForm',
+    name: 'upload-form',
     template:`
-    <ul :class="[className]">
-        <li v-for="message in messages">{{message}}</li>
-    </ul>
-    <form method="POST" id="uploadForm" v-on:submit.prevent="uploadPhoto">
+    <h1>Upload Form</h1>
+    <div :class="[className]">
+        <ul>
+            <li v-for="message in messages">{{message}}</li>
+        </ul>
+    </div>
+    <form method="POST" id="uploadForm" @submit.prevent="uploadPhoto">
         <fieldset class="form-group">
             <label for="description">Description</label>
             <textarea type="text" name="description" class="form-control"></textarea>
         </fieldset>
         <fieldset class="form-group">
             <label for="photo">Photo Upload</label>
-            <input type="file" name="photo" accept="image/*">
+            <input type="file" name="photo" id="photo" class="form-control" accept="image/*" draggable="true">
         </fieldset>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -97,7 +100,7 @@ const UploadForm = {
                 self.messages = [jsonResponse['upload_info']['message']];
                 self.className="uploaded"
             } else {
-                self.messages = jsonResponse['errors'];
+                self.messages = jsonResponse['errors']['errors'];
                 self.className="errors"
             }
             
